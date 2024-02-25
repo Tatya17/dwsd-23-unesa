@@ -1,0 +1,3 @@
+*.zip
+postgres_data/*
+entrypoint.sh

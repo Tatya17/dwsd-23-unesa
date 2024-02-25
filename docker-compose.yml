@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  duck:
+    hostname: duck
+    container_name: warehouse
+    env_file:
+      - ./.env.dev
+    volumes:
+      - ./data:/home/app/duck/data:rw
+    build:
+      context: .
+      dockerfile: duck.Dockerfile
+    networks:
+      my-bridge:
+        aliases:
+          - duck
+    depends_on:
+      - db
+    tty: True
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+  db:
+    hostname: db
+    image: postgres:12.18-bullseye
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env.dev
+    ports:
+      - 5432:5432
+    networks:
+      my-bridge:
+        aliases:
+          - db
+volumes:
+  data:
+    external: True
+  postgres_data:
+    external: True
+networks:
+  my-bridge:
+    external: True

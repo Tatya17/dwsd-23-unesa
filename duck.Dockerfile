@@ -17,8 +17,6 @@ RUN apt-get install unzip postgresql-client -y
 RUN apt-get clean
 
 COPY ./data/duckdb_cli-linux-amd64.zip $HOME
-COPY ./data/dvdrental.tar $HOME
-COPY entrypoint.sh $HOME
 
 RUN chown -R app:app $HOME
 RUN unzip duckdb_cli-linux-amd64.zip
